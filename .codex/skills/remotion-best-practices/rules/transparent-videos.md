@@ -36,9 +36,7 @@ Config.setProResProfile("4444");
 ```tsx
 import { CalculateMetadataFunction } from "remotion";
 
-const calculateMetadata: CalculateMetadataFunction<Props> = async ({
-  props,
-}) => {
+const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) => {
   return {
     defaultCodec: "prores",
     defaultVideoImageFormat: "png",
@@ -47,15 +45,7 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({
   };
 };
 
-<Composition
-  id="my-video"
-  component={MyVideo}
-  durationInFrames={150}
-  fps={30}
-  width={1920}
-  height={1080}
-  calculateMetadata={calculateMetadata}
-/>;
+<Composition id="my-video" component={MyVideo} durationInFrames={150} fps={30} width={1920} height={1080} calculateMetadata={calculateMetadata} />;
 ```
 
 ## Transparent WebM (VP9)
@@ -84,9 +74,7 @@ Config.setCodec("vp9");
 ```tsx
 import { CalculateMetadataFunction } from "remotion";
 
-const calculateMetadata: CalculateMetadataFunction<Props> = async ({
-  props,
-}) => {
+const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) => {
   return {
     defaultCodec: "vp8",
     defaultVideoImageFormat: "png",
@@ -94,13 +82,5 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({
   };
 };
 
-<Composition
-  id="my-video"
-  component={MyVideo}
-  durationInFrames={150}
-  fps={30}
-  width={1920}
-  height={1080}
-  calculateMetadata={calculateMetadata}
-/>;
+<Composition id="my-video" component={MyVideo} durationInFrames={150} fps={30} width={1920} height={1080} calculateMetadata={calculateMetadata} />;
 ```

@@ -91,11 +91,7 @@ return (
 Use `visualizeAudioWaveform()` (https://www.remotion.dev/docs/media-utils/visualize-audio-waveform) with `createSmoothSvgPath()` (https://www.remotion.dev/docs/media-utils/create-smooth-svg-path) for oscilloscope-style displays:
 
 ```tsx
-import {
-  createSmoothSvgPath,
-  useWindowedAudioData,
-  visualizeAudioWaveform,
-} from "@remotion/media-utils";
+import { createSmoothSvgPath, useWindowedAudioData, visualizeAudioWaveform } from "@remotion/media-utils";
 import { staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
 const frame = useCurrentFrame();
@@ -151,8 +147,7 @@ const frequencies = visualizeAudio({
 });
 
 const lowFrequencies = frequencies.slice(0, 32);
-const bassIntensity =
-  lowFrequencies.reduce((sum, v) => sum + v, 0) / lowFrequencies.length;
+const bassIntensity = lowFrequencies.reduce((sum, v) => sum + v, 0) / lowFrequencies.length;
 
 const scale = 1 + bassIntensity * 0.5;
 const opacity = Math.min(0.6, bassIntensity * 0.8);
@@ -178,9 +173,7 @@ const waveform = getWaveformPortion({
 });
 
 // Returns array of { index, amplitude } objects (amplitude: 0-1)
-waveform.map((bar) => (
-  <div key={bar.index} style={{ height: bar.amplitude * 100 }} />
-));
+waveform.map((bar) => <div key={bar.index} style={{ height: bar.amplitude * 100 }} />);
 ```
 
 ## Postprocessing

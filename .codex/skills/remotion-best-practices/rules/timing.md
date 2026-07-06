@@ -54,7 +54,7 @@ Use `transform` strings only when individual CSS transform properties do not cov
 Use `Easing.bezier(x1, y1, x2, y2)` inside the `interpolate` options object. The curve is identical in spirit to CSS animations and transitions, which helps when you are stealing timing from the web or from a designer’s spec.
 
 ```ts
-import { interpolate, Easing } from "remotion";
+import { Easing, interpolate } from "remotion";
 
 const opacity = interpolate(frame, [0, 60], [0, 1], {
   easing: Easing.bezier(0.16, 1, 0.3, 1),
@@ -100,7 +100,7 @@ const pop = interpolate(frame, [0, 30], [0, 1], {
 Easing can be added to the `interpolate` function without a custom cubic:
 
 ```ts
-import { interpolate, Easing } from "remotion";
+import { Easing, interpolate } from "remotion";
 
 const value1 = interpolate(frame, [0, 100], [0, 1], {
   easing: Easing.inOut(Easing.cubic),
@@ -133,22 +133,12 @@ Use `Easing.out` for enter animations (starts fast, decelerates into place) and 
 When multiple properties share the same timing and do not need Studio keyframe editing (e.g. a slide-in panel and a video shift), avoid duplicating the full interpolation for each property. Instead, create a single normalized progress value (0 to 1) and derive each property from it:
 
 ```tsx
-const slideIn = interpolate(
-  frame,
-  [slideInStart, slideInStart + slideInDuration],
-  [0, 1],
-  {
-    easing: Easing.bezier(0.22, 1, 0.36, 1),
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  },
-);
-const slideOut = interpolate(
-  frame,
-  [slideOutStart, slideOutStart + slideOutDuration],
-  [0, 1],
-  { easing: Easing.in(Easing.cubic), extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-);
+const slideIn = interpolate(frame, [slideInStart, slideInStart + slideInDuration], [0, 1], {
+  easing: Easing.bezier(0.22, 1, 0.36, 1),
+  extrapolateLeft: "clamp",
+  extrapolateRight: "clamp",
+});
+const slideOut = interpolate(frame, [slideOutStart, slideOutStart + slideOutDuration], [0, 1], { easing: Easing.in(Easing.cubic), extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 const progress = slideIn - slideOut;
 
 // Derive multiple properties from the same progress

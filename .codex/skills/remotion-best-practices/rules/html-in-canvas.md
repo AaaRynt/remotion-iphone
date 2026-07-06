@@ -52,14 +52,8 @@ export const MyComp = () => {
 `onPaint` runs whenever the content updates. Call `ctx.drawElementImage(elementImage, 0, 0)` to draw the captured DOM, and assign the returned transform to `element.style.transform` so DOM selection still aligns with the painted output.
 
 ```tsx
-import {
-  AbsoluteFill,
-  HtmlInCanvas,
-  type HtmlInCanvasOnPaint,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
 import { useCallback } from "react";
+import { AbsoluteFill, HtmlInCanvas, type HtmlInCanvasOnPaint, useCurrentFrame, useVideoConfig } from "remotion";
 
 export const Blur = () => {
   const frame = useCurrentFrame();
@@ -98,9 +92,7 @@ For WebGL, set up the context, program, and texture in `onInit` and return a cle
 const onInit: HtmlInCanvasOnInit = useCallback(({ canvas }) => {
   const gl = canvas.getContext("webgl2", { alpha: true, premultipliedAlpha: true });
   if (!gl) {
-    throw new Error(
-      "WebGL2 unavailable. Try rendering with the --gl=angle option. See https://remotion.dev/docs/gl-options.",
-    );
+    throw new Error("WebGL2 unavailable. Try rendering with the --gl=angle option. See https://remotion.dev/docs/gl-options.");
   }
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
   // compile program, create texture, set up VAO...

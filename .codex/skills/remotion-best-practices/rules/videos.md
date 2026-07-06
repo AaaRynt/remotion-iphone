@@ -57,8 +57,8 @@ return (
 Wrap the video in a `<Sequence>` to delay when it appears:
 
 ```tsx
-import { Sequence, staticFile } from "remotion";
 import { Video } from "@remotion/media";
+import { Sequence, staticFile } from "remotion";
 
 const { fps } = useVideoConfig();
 
@@ -104,14 +104,7 @@ import { interpolate } from "remotion";
 
 const { fps } = useVideoConfig();
 
-return (
-  <Video
-    src={staticFile("video.mp4")}
-    volume={(f) =>
-      interpolate(f, [0, 1 * fps], [0, 1], { extrapolateRight: "clamp" })
-    }
-  />
-);
+return <Video src={staticFile("video.mp4")} volume={(f) => interpolate(f, [0, 1 * fps], [0, 1], { extrapolateRight: "clamp" })} />;
 ```
 
 Use `muted` to silence the video entirely:

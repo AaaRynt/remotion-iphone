@@ -61,8 +61,8 @@ The audio still starts playing at the beginning of the composition - only the sp
 Wrap the audio in a `<Sequence>` to delay when it starts:
 
 ```tsx
-import { Sequence, staticFile } from "remotion";
 import { Audio } from "@remotion/media";
+import { Sequence, staticFile } from "remotion";
 
 const { fps } = useVideoConfig();
 
@@ -90,14 +90,7 @@ import { interpolate } from "remotion";
 
 const { fps } = useVideoConfig();
 
-return (
-  <Audio
-    src={staticFile("audio.mp3")}
-    volume={(f) =>
-      interpolate(f, [0, 1 * fps], [0, 1], { extrapolateRight: "clamp" })
-    }
-  />
-);
+return <Audio src={staticFile("audio.mp3")} volume={(f) => interpolate(f, [0, 1 * fps], [0, 1], { extrapolateRight: "clamp" })} />;
 ```
 
 The value of `f` starts at 0 when the audio begins to play, not the composition frame.

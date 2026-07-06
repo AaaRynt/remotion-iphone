@@ -1,5 +1,13 @@
 {
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "tabWidth": 2,
   "useTabs": false,
   "bracketSpacing": true,
-  "tabWidth": 2
+  "semi": true,
+  "printWidth": 1000000000000000000,
+  "singleQuote": false,
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^@/.*$", "^[./]"],
+  "importOrderSortSpecifiers": true,
+  "tailwindFunctions": ["clsx", "cva"]
 }
