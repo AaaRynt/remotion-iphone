@@ -26,3 +26,4 @@ minimumReleaseAgeExclude:
   - "@remotion/web-renderer@4.0.490"
   - "@remotion/zod-types@4.0.490"
   - remotion@4.0.490
+  - "@remotion/media@4.0.490"
