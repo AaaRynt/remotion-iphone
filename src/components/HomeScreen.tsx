@@ -1,14 +1,7 @@
 import type { CSSProperties } from "react";
 import { AbsoluteFill, Easing, interpolate, spring } from "remotion";
 import { FPS, TIMELINE, WIDTH } from "../timeline";
-import {
-  HomeIndicator,
-  IonIcon,
-  type IonIconName,
-  LiquidGlassSurface,
-  StatusBar,
-  WallpaperLayer,
-} from "./SystemUI";
+import { HomeIndicator, IonIcon, type IonIconName, LiquidGlassSurface, StatusBar, WallpaperLayer } from "./SystemUI";
 
 type AppSpec = {
   readonly glyph: IonIconName;
@@ -78,12 +71,7 @@ const weekDays: readonly { readonly day: string; readonly date: string; readonly
   { day: "S", date: "19" },
 ] as const;
 
-const todoRows: readonly { readonly text: string; readonly active?: boolean; readonly done?: boolean }[] = [
-  { text: "-----------", done: true },
-  { text: "--------", active: true },
-  { text: "----------", done: true },
-  { text: "------" },
-] as const;
+const todoRows: readonly { readonly text: string; readonly active?: boolean; readonly done?: boolean }[] = [{ text: "-----------", done: true }, { text: "--------", active: true }, { text: "----------", done: true }, { text: "------" }] as const;
 
 const AppIcon = ({ app, pressed = 0, compact = false }: { app: AppSpec; pressed?: number; compact?: boolean }) => {
   const size = compact ? 150 : 156;
@@ -93,9 +81,7 @@ const AppIcon = ({ app, pressed = 0, compact = false }: { app: AppSpec; pressed?
     background: app.gradient,
     border: "1px solid rgba(255,255,255,0.2)",
     borderRadius: compact ? 38 : 40,
-    boxShadow: app.qa
-      ? "0 18px 42px rgba(7,40,126,0.5), inset 0 1px 1px rgba(255,255,255,0.32)"
-      : "0 15px 34px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.24)",
+    boxShadow: app.qa ? "0 18px 42px rgba(7,40,126,0.5), inset 0 1px 1px rgba(255,255,255,0.32)" : "0 15px 34px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.24)",
     display: "flex",
     height: size,
     justifyContent: "center",
@@ -116,11 +102,7 @@ const AppIcon = ({ app, pressed = 0, compact = false }: { app: AppSpec; pressed?
             position: "absolute",
           }}
         />
-        <IonIcon
-          className="block shrink-0 object-contain"
-          name={app.glyph}
-          style={{ height: iconSize, opacity: 0.97, width: iconSize }}
-        />
+        <IonIcon className="block shrink-0 object-contain" name={app.glyph} style={{ height: iconSize, opacity: 0.97, width: iconSize }} />
         {app.qa ? (
           <div
             style={{
@@ -145,10 +127,7 @@ const AppIcon = ({ app, pressed = 0, compact = false }: { app: AppSpec; pressed?
         />
       </div>
       {app.label ? (
-        <div
-          className="font-medium text-white"
-          style={{ fontSize: 30, letterSpacing: -0.4, lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}
-        >
+        <div className="font-medium text-white" style={{ fontSize: 30, letterSpacing: -0.4, lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
           {app.label}
         </div>
       ) : null}
@@ -158,10 +137,7 @@ const AppIcon = ({ app, pressed = 0, compact = false }: { app: AppSpec; pressed?
 
 const WeeklyScheduleWidget = () => {
   return (
-    <LiquidGlassSurface
-      className="relative overflow-hidden text-white"
-      style={{ borderRadius: 52, height: 610, padding: "38px 34px 32px" }}
-    >
+    <LiquidGlassSurface className="relative overflow-hidden text-white" style={{ borderRadius: 52, height: 610, padding: "38px 34px 32px" }}>
       <div className="flex items-center justify-between">
         <div>
           <div className="font-semibold" style={{ fontSize: 40, letterSpacing: -1.1 }}>
@@ -171,15 +147,8 @@ const WeeklyScheduleWidget = () => {
             July 13–19
           </div>
         </div>
-        <div
-          className="flex items-center justify-center"
-          style={{ background: "rgba(105,126,255,0.22)", borderRadius: 22, height: 64, width: 64 }}
-        >
-          <IonIcon
-            className="block shrink-0 object-contain"
-            name="calendar-outline"
-            style={{ height: 36, opacity: 0.95, width: 36 }}
-          />
+        <div className="flex items-center justify-center" style={{ background: "rgba(105,126,255,0.22)", borderRadius: 22, height: 64, width: 64 }}>
+          <IonIcon className="block shrink-0 object-contain" name="calendar-outline" style={{ height: 36, opacity: 0.95, width: 36 }} />
         </div>
       </div>
 
@@ -238,10 +207,7 @@ const WeeklyScheduleWidget = () => {
 
 const TodoWidget = () => {
   return (
-    <LiquidGlassSurface
-      className="relative overflow-hidden text-white"
-      style={{ borderRadius: 52, height: 610, padding: "38px 30px 28px" }}
-    >
+    <LiquidGlassSurface className="relative overflow-hidden text-white" style={{ borderRadius: 52, height: 610, padding: "38px 30px 28px" }}>
       <div className="flex items-center justify-between" style={{ paddingInline: 4 }}>
         <div>
           <div className="font-semibold" style={{ fontSize: 40, letterSpacing: -1.1 }}>
@@ -251,15 +217,8 @@ const TodoWidget = () => {
             2 remaining
           </div>
         </div>
-        <div
-          className="flex items-center justify-center"
-          style={{ background: "rgba(116,102,231,0.2)", borderRadius: 22, height: 64, width: 64 }}
-        >
-          <IonIcon
-            className="block shrink-0 object-contain"
-            name="checkmark-circle-outline"
-            style={{ height: 38, opacity: 0.95, width: 38 }}
-          />
+        <div className="flex items-center justify-center" style={{ background: "rgba(116,102,231,0.2)", borderRadius: 22, height: 64, width: 64 }}>
+          <IonIcon className="block shrink-0 object-contain" name="checkmark-circle-outline" style={{ height: 38, opacity: 0.95, width: 38 }} />
         </div>
       </div>
 
@@ -327,10 +286,7 @@ const FirstHomePage = ({ swipeProgress }: { swipeProgress: number }) => {
           <WeeklyScheduleWidget />
           <TodoWidget />
         </div>
-        <div
-          className="grid grid-cols-4"
-          style={{ columnGap: 24, marginTop: 65, rowGap: 48 }}
-        >
+        <div className="grid grid-cols-4" style={{ columnGap: 24, marginTop: 65, rowGap: 48 }}>
           {FIRST_PAGE_APPS.map((app, index) => (
             <AppIcon app={app} compact key={`${app.glyph}-${index}`} />
           ))}
@@ -352,10 +308,7 @@ const SecondHomePage = ({ swipeProgress, pressProgress }: { swipeProgress: numbe
         width: WIDTH,
       }}
     >
-      <div
-        className="grid grid-cols-4"
-        style={{ columnGap: 24, left: 64, position: "absolute", right: 64, rowGap: 62, top: 238 }}
-      >
+      <div className="grid grid-cols-4" style={{ columnGap: 24, left: 64, position: "absolute", right: 64, rowGap: 62, top: 238 }}>
         {SECOND_PAGE_APPS.map((app, index) => (
           <AppIcon app={app} key={`${app.glyph}-${index}`} pressed={app.qa ? pressProgress : 0} />
         ))}
@@ -402,10 +355,7 @@ const PageIndicator = ({ swipeProgress }: { swipeProgress: number }) => {
 
 const Dock = () => {
   return (
-    <LiquidGlassSurface
-      className="overflow-hidden"
-      style={{ borderRadius: 64, bottom: 67, height: 244, left: 54, position: "absolute", right: 54 }}
-    >
+    <LiquidGlassSurface className="overflow-hidden" style={{ borderRadius: 64, bottom: 67, height: 244, left: 54, position: "absolute", right: 54 }}>
       <div className="flex h-full w-full items-center justify-around" style={{ paddingInline: 28 }}>
         {DOCK_APPS.map((app, index) => (
           <AppIcon app={app} compact key={`${app.glyph}-${index}`} />
@@ -432,18 +382,8 @@ export const HomeScreen = ({ globalFrame }: { globalFrame: number }) => {
   });
   const swipeProgress = Math.min(1, Math.max(0, rawSwipe));
 
-  const pressProgress = interpolate(
-    globalFrame,
-    [TIMELINE.appPressStart, TIMELINE.appOpenStart, TIMELINE.appOpenStart + 12],
-    [0, 1, 0],
-    CLAMP,
-  );
-  const appOpenProgress = interpolate(
-    globalFrame,
-    [TIMELINE.appOpenStart, TIMELINE.splashStart],
-    [0, 1],
-    { ...CLAMP, easing: Easing.bezier(0.32, 0, 0.16, 1) },
-  );
+  const pressProgress = interpolate(globalFrame, [TIMELINE.appPressStart, TIMELINE.appOpenStart, TIMELINE.appOpenStart + 12], [0, 1, 0], CLAMP);
+  const appOpenProgress = interpolate(globalFrame, [TIMELINE.appOpenStart, TIMELINE.splashStart], [0, 1], { ...CLAMP, easing: Easing.bezier(0.32, 0, 0.16, 1) });
 
   const unlockOpacity = interpolate(unlockProgress, [0, 0.62], [0, 1], CLAMP);
   const unlockScale = interpolate(unlockProgress, [0, 1], [1.085, 1], CLAMP);
@@ -460,48 +400,56 @@ export const HomeScreen = ({ globalFrame }: { globalFrame: number }) => {
     <AbsoluteFill
       style={{
         backgroundColor: "#04030b",
-        filter: `blur(${unlockBlur + appRecedeBlur}px)`,
-        opacity: unlockOpacity * appRecedeOpacity,
+        filter: `blur(${unlockBlur}px)`,
+        opacity: unlockOpacity,
         overflow: "hidden",
-        scale: unlockScale * appRecedeScale,
+        scale: unlockScale,
         transformOrigin: "38% 17%",
       }}
     >
-      <WallpaperLayer
-        globalFrame={globalFrame}
-        kind="home"
-        style={{
-          filter: "brightness(0.7) saturate(0.96)",
-          scale: wallpaperScale,
-          translate: `${wallpaperX}px ${wallpaperY}px`,
-        }}
-      />
-
       <AbsoluteFill
         style={{
-          background:
-            "linear-gradient(180deg, rgba(2,2,9,0.27) 0%, rgba(2,2,9,0.02) 24%, rgba(1,1,8,0.05) 67%, rgba(1,1,8,0.28) 100%)",
+          filter: `blur(${appRecedeBlur}px)`,
+          opacity: appRecedeOpacity,
+          scale: appRecedeScale,
+          transformOrigin: "38% 17%",
         }}
-      />
-
-      <StatusBar globalFrame={globalFrame} />
-
-      <AbsoluteFill style={{ overflow: "hidden" }}>
-        <div
-          className="flex"
+      >
+        <WallpaperLayer
+          globalFrame={globalFrame}
+          kind="home"
           style={{
-            height: "100%",
-            translate: `${-WIDTH * swipeProgress}px 0`,
-            width: WIDTH * 2,
+            filter: "brightness(0.7) saturate(0.96)",
+            scale: wallpaperScale,
+            translate: `${wallpaperX}px ${wallpaperY}px`,
           }}
-        >
-          <FirstHomePage swipeProgress={swipeProgress} />
-          <SecondHomePage pressProgress={pressProgress} swipeProgress={swipeProgress} />
-        </div>
+        />
+
+        <AbsoluteFill
+          style={{
+            background: "linear-gradient(180deg, rgba(2,2,9,0.27) 0%, rgba(2,2,9,0.02) 24%, rgba(1,1,8,0.05) 67%, rgba(1,1,8,0.28) 100%)",
+          }}
+        />
+
+        <AbsoluteFill style={{ overflow: "hidden" }}>
+          <div
+            className="flex"
+            style={{
+              height: "100%",
+              translate: `${-WIDTH * swipeProgress}px 0`,
+              width: WIDTH * 2,
+            }}
+          >
+            <FirstHomePage swipeProgress={swipeProgress} />
+            <SecondHomePage pressProgress={pressProgress} swipeProgress={swipeProgress} />
+          </div>
+        </AbsoluteFill>
+
+        <PageIndicator swipeProgress={swipeProgress} />
+        <Dock />
       </AbsoluteFill>
 
-      <PageIndicator swipeProgress={swipeProgress} />
-      <Dock />
+      <StatusBar globalFrame={globalFrame} />
       <HomeIndicator />
     </AbsoluteFill>
   );
