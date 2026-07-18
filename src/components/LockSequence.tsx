@@ -1,5 +1,5 @@
 import { AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { PASSCODE_EVENTS, TIMELINE, formatVirtualTime } from "../timeline";
+import { PASSCODE_EVENTS, TIMELINE, formatVirtualTime, framesAt60 } from "../timeline";
 import { DynamicIsland, HomeIndicator, IOS_FONT, IonIcon, LiquidGlassSurface, StatusBar, SystemRoundButton, Wallpaper } from "./SystemUI";
 
 const clamp = {
@@ -14,13 +14,13 @@ export const MagSafeCharging = () => {
     frame,
     fps,
     config: { damping: 18, stiffness: 115, mass: 0.9 },
-    durationInFrames: 52,
+    durationInFrames: framesAt60(52),
   });
-  const exit = interpolate(frame, [122, 149], [1, 0], {
+  const exit = interpolate(frame, [framesAt60(122), framesAt60(149)], [1, 0], {
     ...clamp,
     easing: Easing.in(Easing.cubic),
   });
-  const glow = interpolate(frame, [0, 28, 68, 120], [0, 0.72, 0.48, 0.34], {
+  const glow = interpolate(frame, [0, framesAt60(28), framesAt60(68), framesAt60(120)], [0, 0.72, 0.48, 0.34], {
     ...clamp,
     easing: Easing.inOut(Easing.sin),
   });
@@ -35,7 +35,7 @@ export const MagSafeCharging = () => {
           opacity: glow,
           scale: 0.92 + arrival * 0.08,
           background: "radial-gradient(circle, rgba(75,255,139,0.22) 0%, rgba(47,210,112,0.08) 43%, transparent 72%)",
-          filter: `blur(${interpolate(frame, [0, 36], [34, 9], clamp)}px)`,
+          filter: `blur(${interpolate(frame, [0, framesAt60(36)], [34, 9], clamp)}px)`,
         }}
       />
       <div
@@ -51,7 +51,7 @@ export const MagSafeCharging = () => {
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            rotate: `${interpolate(frame, [0, 150], [-18, 22], clamp)}deg`,
+            rotate: `${interpolate(frame, [0, framesAt60(150)], [-18, 22], clamp)}deg`,
             background: "conic-gradient(from 214deg, rgba(55,220,116,0.10), rgba(76,239,137,0.96) 28%, rgba(118,255,170,0.36) 56%, rgba(46,185,98,0.08) 84%, rgba(55,220,116,0.10))",
             WebkitMask: "radial-gradient(farthest-side, transparent calc(100% - 20px), #000 calc(100% - 19px))",
             mask: "radial-gradient(farthest-side, transparent calc(100% - 20px), #000 calc(100% - 19px))",
@@ -65,7 +65,7 @@ export const MagSafeCharging = () => {
                 <div
                   className="absolute top-[4px] bottom-[4px] left-[4px] rounded-[5px] bg-current"
                   style={{
-                    width: interpolate(frame, [12, 68], [20, 52], clamp),
+                    width: interpolate(frame, [framesAt60(12), framesAt60(68)], [20, 52], clamp),
                   }}
                 />
                 <div className="absolute top-[9px] -right-[10px] h-[12px] w-[6px] rounded-r bg-current opacity-70" />
@@ -92,11 +92,11 @@ const LockIcon = () => (
 
 const LockScreenContent = ({ localFrame }: { readonly localFrame: number }) => {
   const globalFrame = TIMELINE.lockScreenStart + localFrame;
-  const reveal = interpolate(localFrame, [0, 24], [0, 1], {
+  const reveal = interpolate(localFrame, [0, framesAt60(24)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
-  const swipe = interpolate(localFrame, [180, 240], [0, 1], {
+  const swipe = interpolate(localFrame, [framesAt60(180), framesAt60(240)], [0, 1], {
     ...clamp,
     easing: Easing.bezier(0.32, 0.72, 0, 1),
   });
@@ -156,7 +156,7 @@ const keypad = [
 
 const PasscodeKey = ({ digit, letters, globalFrame }: { readonly digit: string; readonly letters: string; readonly globalFrame: number }) => {
   const pressFrame = PASSCODE_EVENTS.find((event) => event.key === digit)?.frame;
-  const press = pressFrame === undefined ? 0 : interpolate(globalFrame, [pressFrame, pressFrame + 3, pressFrame + 10], [0, 1, 0], clamp);
+  const press = pressFrame === undefined ? 0 : interpolate(globalFrame, [pressFrame, pressFrame + framesAt60(3), pressFrame + framesAt60(10)], [0, 1, 0], clamp);
 
   return (
     <LiquidGlassSurface
@@ -181,15 +181,15 @@ const PasscodeKey = ({ digit, letters, globalFrame }: { readonly digit: string; 
 
 const PasscodeScreenContent = ({ localFrame }: { readonly localFrame: number }) => {
   const globalFrame = TIMELINE.lockScreenStart + localFrame;
-  const appearance = interpolate(localFrame, [180, 230], [0, 1], {
+  const appearance = interpolate(localFrame, [framesAt60(180), framesAt60(230)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
-  const unlock = interpolate(localFrame, [414, 450], [0, 1], {
+  const unlock = interpolate(localFrame, [framesAt60(414), framesAt60(450)], [0, 1], {
     ...clamp,
     easing: Easing.bezier(0.32, 0.72, 0, 1),
   });
-  const filledDots = PASSCODE_EVENTS.filter((event) => globalFrame >= event.frame + 3).length;
+  const filledDots = PASSCODE_EVENTS.filter((event) => globalFrame >= event.frame + framesAt60(3)).length;
 
   return (
     <AbsoluteFill
@@ -222,7 +222,7 @@ const PasscodeScreenContent = ({ localFrame }: { readonly localFrame: number }) 
                 className="h-[25px] w-[25px] rounded-full border-[3px] border-white/90"
                 style={{
                   backgroundColor: filled ? "rgba(255,255,255,0.96)" : "transparent",
-                  scale: globalFrame >= event.frame && globalFrame <= event.frame + 9 ? interpolate(globalFrame, [event.frame, event.frame + 4, event.frame + 9], [0.7, 1.22, 1], clamp) : 1,
+                  scale: globalFrame >= event.frame && globalFrame <= event.frame + framesAt60(9) ? interpolate(globalFrame, [event.frame, event.frame + framesAt60(4), event.frame + framesAt60(9)], [0.7, 1.22, 1], clamp) : 1,
                 }}
               />
             );
@@ -248,13 +248,13 @@ const PasscodeScreenContent = ({ localFrame }: { readonly localFrame: number }) 
 
 export const LockSequence = () => {
   const localFrame = useCurrentFrame();
-  const wallpaperDrift = interpolate(localFrame, [0, 450], [-4, 4], clamp);
-  const unlockDarken = interpolate(localFrame, [414, 450], [0, 0.16], clamp);
-  const appearance = interpolate(localFrame, [0, 18], [0, 1], {
+  const wallpaperDrift = interpolate(localFrame, [0, framesAt60(450)], [-4, 4], clamp);
+  const unlockDarken = interpolate(localFrame, [framesAt60(414), framesAt60(450)], [0, 0.16], clamp);
+  const appearance = interpolate(localFrame, [0, framesAt60(18)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
-  const unlockExit = interpolate(localFrame, [414, 450], [0, 1], {
+  const unlockExit = interpolate(localFrame, [framesAt60(414), framesAt60(450)], [0, 1], {
     ...clamp,
     easing: Easing.inOut(Easing.cubic),
   });

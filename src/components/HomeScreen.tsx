@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { AbsoluteFill, Easing, interpolate, spring } from "remotion";
-import { FPS, TIMELINE, WIDTH } from "../timeline";
+import { FPS, TIMELINE, WIDTH, framesAt60 } from "../timeline";
 import { HomeIndicator, IonIcon, type IonIconName, LiquidGlassSurface, StatusBar, WallpaperLayer } from "./SystemUI";
 
 type AppSpec = {
@@ -368,7 +368,7 @@ const Dock = () => {
 export const HomeScreen = ({ globalFrame }: { globalFrame: number }) => {
   const unlockSpring = spring({
     config: { damping: 25, mass: 0.86, stiffness: 175 },
-    durationInFrames: 42,
+    durationInFrames: framesAt60(42),
     fps: FPS,
     frame: Math.max(0, globalFrame - TIMELINE.homePremountStart),
   });
@@ -382,7 +382,7 @@ export const HomeScreen = ({ globalFrame }: { globalFrame: number }) => {
   });
   const swipeProgress = Math.min(1, Math.max(0, rawSwipe));
 
-  const pressProgress = interpolate(globalFrame, [TIMELINE.appPressStart, TIMELINE.appOpenStart, TIMELINE.appOpenStart + 12], [0, 1, 0], CLAMP);
+  const pressProgress = interpolate(globalFrame, [TIMELINE.appPressStart, TIMELINE.appOpenStart, TIMELINE.appOpenStart + framesAt60(12)], [0, 1, 0], CLAMP);
   const appOpenProgress = interpolate(globalFrame, [TIMELINE.appOpenStart, TIMELINE.splashStart], [0, 1], { ...CLAMP, easing: Easing.bezier(0.32, 0, 0.16, 1) });
 
   const unlockOpacity = interpolate(unlockProgress, [0, 0.62], [0, 1], CLAMP);

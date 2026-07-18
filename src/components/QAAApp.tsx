@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { AbsoluteFill, Easing, Img, interpolate, spring, staticFile } from "remotion";
-import { FINAL_SEARCH_VALUE, FPS, KEYBOARD_EVENTS, TIMELINE, WECOM_MESSAGE, WECOM_SENDER, getTypedValue } from "../timeline";
+import { FINAL_SEARCH_VALUE, FPS, KEYBOARD_EVENTS, TIMELINE, WECOM_MESSAGE, WECOM_SENDER, framesAt60, getTypedValue } from "../timeline";
 import { HomeIndicator, IOS_FONT, IonIcon, LiquidGlassSurface, StatusBar } from "./SystemUI";
 
 const clamp = {
@@ -69,7 +69,7 @@ const keyPressAmount = (globalFrame: number, key: string) => {
       return amount;
     }
 
-    return Math.max(amount, interpolate(globalFrame, [event.frame, event.frame + 3, event.frame + 9], [0, 1, 0], clamp));
+    return Math.max(amount, interpolate(globalFrame, [event.frame, event.frame + framesAt60(3), event.frame + framesAt60(9)], [0, 1, 0], clamp));
   }, 0);
 };
 
@@ -143,7 +143,7 @@ export const IOSKeyboard = ({ globalFrame }: { readonly globalFrame: number }) =
     frame: globalFrame - TIMELINE.searchStart,
     fps: FPS,
     config: { damping: 24, stiffness: 170, mass: 1 },
-    durationInFrames: 42,
+    durationInFrames: framesAt60(42),
   });
   const value = getTypedValue(globalFrame);
   const predictions = value === FINAL_SEARCH_VALUE ? SEARCH_SUGGESTIONS : value.length > 0 ? ([value, "solutions", "answers"] as const) : (["questions", "answers", "topics"] as const);
@@ -211,12 +211,12 @@ export const IOSKeyboard = ({ globalFrame }: { readonly globalFrame: number }) =
 };
 
 export const SearchField = ({ globalFrame }: { readonly globalFrame: number }) => {
-  const focus = interpolate(globalFrame, [TIMELINE.searchStart, TIMELINE.searchStart + 24], [0, 1], {
+  const focus = interpolate(globalFrame, [TIMELINE.searchStart, TIMELINE.searchStart + framesAt60(24)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
   const value = getTypedValue(globalFrame);
-  const cursorOpacity = focus === 0 ? 0 : Math.floor((globalFrame - TIMELINE.searchStart) / 28) % 2 === 0 ? 1 : 0.28;
+  const cursorOpacity = focus === 0 ? 0 : Math.floor((globalFrame - TIMELINE.searchStart) / framesAt60(28)) % 2 === 0 ? 1 : 0.28;
 
   return (
     <div className="absolute top-[186px] right-[52px] left-[52px] z-20 flex h-[94px] items-center">
@@ -246,11 +246,11 @@ export const SearchField = ({ globalFrame }: { readonly globalFrame: number }) =
 };
 
 export const SearchSuggestions = ({ globalFrame }: { readonly globalFrame: number }) => {
-  const focus = interpolate(globalFrame, [TIMELINE.searchStart + 10, TIMELINE.searchStart + 32], [0, 1], {
+  const focus = interpolate(globalFrame, [TIMELINE.searchStart + framesAt60(10), TIMELINE.searchStart + framesAt60(32)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
-  const revealExact = interpolate(globalFrame, [1681, 1698], [0, 1], {
+  const revealExact = interpolate(globalFrame, [framesAt60(1681), framesAt60(1698)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
@@ -357,7 +357,7 @@ const BottomTabBar = ({ opacity }: { readonly opacity: number }) => (
 );
 
 export const QAFeed = ({ globalFrame }: { readonly globalFrame: number }) => {
-  const focus = interpolate(globalFrame, [TIMELINE.searchStart, TIMELINE.searchStart + 28], [0, 1], {
+  const focus = interpolate(globalFrame, [TIMELINE.searchStart, TIMELINE.searchStart + framesAt60(28)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
@@ -397,11 +397,11 @@ export const QAFeed = ({ globalFrame }: { readonly globalFrame: number }) => {
 
 const SplashAd = ({ globalFrame }: { readonly globalFrame: number }) => {
   const countdown = globalFrame < TIMELINE.splashStart + FPS ? 2 : 1;
-  const settle = interpolate(globalFrame, [TIMELINE.splashStart, TIMELINE.splashStart + 30], [0, 1], {
+  const settle = interpolate(globalFrame, [TIMELINE.splashStart, TIMELINE.splashStart + framesAt60(30)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
-  const pillSettle = interpolate(globalFrame, [TIMELINE.splashStart, TIMELINE.splashStart + 10], [0.42, 1], {
+  const pillSettle = interpolate(globalFrame, [TIMELINE.splashStart, TIMELINE.splashStart + framesAt60(10)], [0.42, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
@@ -466,7 +466,7 @@ export const SystemNotification = ({ globalFrame }: { readonly globalFrame: numb
     frame: globalFrame - TIMELINE.notificationStart,
     fps: FPS,
     config: { damping: 23, stiffness: 185, mass: 0.92 },
-    durationInFrames: 36,
+    durationInFrames: framesAt60(36),
   });
   const exit = interpolate(globalFrame, [TIMELINE.notificationExitStart, TIMELINE.notificationEnd], [0, 1], {
     ...clamp,
@@ -520,11 +520,11 @@ export const QAAApp = ({ globalFrame }: { readonly globalFrame: number }) => {
     ...clamp,
     easing: Easing.bezier(0.32, 0.72, 0, 1),
   });
-  const splashOpacity = interpolate(globalFrame, [1158, TIMELINE.feedStart], [1, 0], {
+  const splashOpacity = interpolate(globalFrame, [framesAt60(1158), TIMELINE.feedStart], [1, 0], {
     ...clamp,
     easing: Easing.inOut(Easing.cubic),
   });
-  const feedOpacity = interpolate(globalFrame, [1162, TIMELINE.feedStart + 12], [0, 1], {
+  const feedOpacity = interpolate(globalFrame, [framesAt60(1162), TIMELINE.feedStart + framesAt60(12)], [0, 1], {
     ...clamp,
     easing: Easing.out(Easing.cubic),
   });
@@ -534,7 +534,7 @@ export const QAAApp = ({ globalFrame }: { readonly globalFrame: number }) => {
   const insetLeft = interpolate(opening, [0, 1], [392, 0], clamp);
   const cornerRadius = interpolate(opening, [0, 1], [35, 0], clamp);
   const systemOpacity = interpolate(opening, [0.86, 1], [0, 1], clamp);
-  const sourceIconOpacity = interpolate(globalFrame, [TIMELINE.appOpenStart, TIMELINE.appOpenStart + 4, TIMELINE.appOpenStart + 12], [1, 1, 0], clamp);
+  const sourceIconOpacity = interpolate(globalFrame, [TIMELINE.appOpenStart, TIMELINE.appOpenStart + framesAt60(4), TIMELINE.appOpenStart + framesAt60(12)], [1, 1, 0], clamp);
 
   return (
     <AbsoluteFill
